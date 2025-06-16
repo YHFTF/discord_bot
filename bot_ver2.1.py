@@ -2,15 +2,16 @@ import asyncio
 import discord
 from discord import app_commands
 from discord.ext import commands
+from discord import Embed, ButtonStyle
+from discord.ui import View, Button
+from discord import Interaction
 import yt_dlp
 from urllib.parse import urlparse, parse_qs, urlencode
 import google.generativeai as genai
 import os
-from discord import Embed, ButtonStyle
-from discord.ui import View, Button
 import math
 import time
-from discord import Interaction
+
 
 TOKEN = '' # 여기에 디스코드 봇 토큰을 입력하세요
 INSTANCE_OCID = '' # 여기에 Oracle 인스턴스 OCID를 입력하세요
@@ -363,28 +364,6 @@ async def 욕통계(interaction: discord.Interaction):
     sorted_lines = sorted(lines, key=lambda line: -int(line.split()[-1][:-1]))  # 많은 순 정렬
     msg = "\n".join(sorted_lines)
     await interaction.response.send_message(f"# 욕설 통계:\n{msg}")
-
-
-@tree.command(name="예시", description="풍부한 노래 정보 임베드 메시지 예시")
-async def 예시(interaction: discord.Interaction):
-    embed = Embed(
-        title="노래 재생 중",
-        description="[ILLIT (아일릿) 'Magnetic'](https://www.youtube.com/watch?v=dummy)",
-        color=0x7289DA
-    )
-    embed.set_thumbnail(url="https://i.ytimg.com/vi/dummy/hqdefault.jpg")  # 썸네일
-    embed.add_field(name="재생 시간", value="2분 전 ———— 40초 후\n(0:00)━━━━━⬤────── (3:09)", inline=False)
-    embed.set_footer(text="신청자: 트레이닝 | 남은 확률: 50% | 오늘 오후 8:51")
-
-    view = View()
-    view.add_item(Button(label="정지", style=ButtonStyle.danger))
-    view.add_item(Button(label="구간 이동", style=ButtonStyle.blurple))
-    view.add_item(Button(label="일시정지", style=ButtonStyle.secondary))
-    view.add_item(Button(label="▶️ 스킵", style=ButtonStyle.primary))
-    view.add_item(Button(label="매일 놀러 음악 추가하기", style=ButtonStyle.success, url="https://example.com"))
-
-    await interaction.response.send_message(embed=embed, view=view)
-
 
 # ✅ 봇 시작 이벤트
 @client.event
